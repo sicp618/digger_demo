@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
     types: [ closed, opened, synchronize, reopened ]
@@ -14,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: print event for json
+        env: 
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
       - name: digger run
         uses: diggerhq/digger@v0.1.12
         with:
